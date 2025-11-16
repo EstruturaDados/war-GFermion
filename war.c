@@ -15,6 +15,8 @@
 // ============================================================================
 
 // Inclusão das bibliotecas padrão necessárias para entrada/saída, alocação de memória, manipulação de strings e tempo.
+#include <stdio.h>
+#include <string.h>
 
 // --- Constantes Globais ---
 // Definem valores fixos para o número de territórios, missões e tamanho máximo de strings, facilitando a manutenção.
@@ -22,16 +24,48 @@
 // --- Estrutura de Dados ---
 // Define a estrutura para um território, contendo seu nome, a cor do exército que o domina e o número de tropas.
 
+typedef struct {
+    char nome[50];
+    char corExercito[30];
+    int numeroTropas;
+} Territorio;
+
 // --- Protótipos das Funções ---
 // Declarações antecipadas de todas as funções que serão usadas no programa, organizadas por categoria.
 // Funções de setup e gerenciamento de memória:
 // Funções de interface com o usuário:
 // Funções de lógica principal do jogo:
 // Função utilitária:
+void cadastrarTerritorios(Territorio territorios[], int tamanho) {
+    for (int i = 0; i < tamanho; i++) {
+        printf("Digite o nome do território %d: ", i + 1);
+        scanf(" %49[^\n]", territorios[i].nome);
+        printf("Digite a cor do exército do território %d: ", i + 1);
+        scanf(" %29[^\n]", territorios[i].corExercito);
+        printf("Digite o número de tropas do território %d: ", i + 1);
+        scanf("%d", &territorios[i].numeroTropas);
+    }
+}
+
+void exibirTerritorios(const Territorio territorios[], int tamanho) {
+    for (int i = 0; i < tamanho; i++) {
+        printf("\n--- Dados do Território %d ---\n", i + 1);
+        printf("Nome: %s\n", territorios[i].nome);
+        printf("Cor do Exército: %s\n", territorios[i].corExercito);
+        printf("Número de Tropas: %d\n", territorios[i].numeroTropas);
+    }
+}
 
 // --- Função Principal (main) ---
 // Função principal que orquestra o fluxo do jogo, chamando as outras funções em ordem.
 int main() {
+
+    const int tamanho = 5;
+    Territorio territorios[tamanho];
+
+    cadastrarTerritorios(territorios, tamanho);
+    exibirTerritorios(territorios, tamanho);
+
     // 1. Configuração Inicial (Setup):
     // - Define o locale para português.
     // - Inicializa a semente para geração de números aleatórios com base no tempo atual.
